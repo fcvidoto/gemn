@@ -17,6 +17,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
 	// res.send("Oioioio");
 	res.sendFile(__dirname + '/public/login.html');
+	console.log("funcionando");
 });
 
 
