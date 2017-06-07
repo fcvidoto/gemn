@@ -15,9 +15,9 @@ app.use(express.static(__dirname + '/public'));
 // ---------------------------------------
 //ROOT PAGE
 app.get('/', function(req, res) {
-	// res.send("Oioioio");
-	res.sendFile(__dirname + '/public/login.html');
-	console.log("funcionando");
+	// res.sendFile(__dirname + '/public/login.html');
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');	
 });
 
 
