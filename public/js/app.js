@@ -5,18 +5,22 @@
 // valida o acesso do user
 $(".botao-confirmar").on("click", (e) => {
 	e.preventDefault();
-	verificauser(); // verifica se o user esta cadastrado na base de dados
+
+	var email = $('#email').val();
+	var password = $('#password').val();
+	
+	// verifica se o user esta cadastrado na base de dados
+	if (email !== '' && password !== '') {
+		verificauser(); 
+	}
 });
 
 
 
 // --------------------------------------------------------
 // verifica se o user esta cadastrado na base de dados
-function verificauser() {
+function verificauser(email, password) {
 
-	var email = $('#email').val();
-	var password = $('#password').val();
-	
 	$.post('/consulta', {sender: email,
 											 password: password}, function(data, textStatus, xhr) {
 		// enviar msg ao servidor e ao site avisando do envio

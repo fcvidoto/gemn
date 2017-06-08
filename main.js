@@ -44,8 +44,8 @@ app.post('/consulta', function(req, res) {
 	connection.query('select * from usuarios where Email="' + req.email + '"', function(error, results, fields) {
 		if (error) throw error;
  		console.log('resultado:', results);
-		res.send(results);
-		// res.send('Sucesso').status(200);
+		res.send('Sucesso').status(200);
+		// res.send(results);
 	});
 });
 
