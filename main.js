@@ -32,15 +32,16 @@ var connection = mysql.createConnection({
 // ---------------------------------------
 // ROOT PAGE
 app.get('/', function(req, res) {
-	res.sendFile(__dirname + '/public/login.html');
+	res.sendFile(__dirname + '/public/index.html');
 });
 
 
 // ---------------------------------------
-// Consulta
-app.get('/consulta', function(req, res) {
+// CONSULTA PAGE
+// verifica se o user possui acesso
+app.post('/consulta', function(req, res) {
 	connection.connect();
-	connection.query('select * from usuarios', function(error, results, fields) {
+	connection.query('select * from usuarios where Email="' + req.email + '"', function(error, results, fields) {
 		if (error) throw error;
  		console.log('resultado:', results);
 		res.send(results);
