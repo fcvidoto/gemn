@@ -31,8 +31,8 @@ app.get('*', function(req, res, next) {
 
 // ***********************************
 //LISTENING
-app.listen(process.env.PORT || 8080, function() {
-	console.log("Ouvindo na porta: " + (process.env.PORT || 8080));
+app.listen(process.env.PORT || 3000, function() {
+	console.log("Ouvindo na porta: " + (process.env.PORT || 3000));
 });
 
 
