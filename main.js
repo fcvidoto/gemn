@@ -1,5 +1,11 @@
 'use strict'; // jshint node:true
 
+
+var fs = require('fs');
+// var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
+// var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+// var credentials = {key: privateKey, cert: certificate};
+
 var http = require('http');
 var https = require('https');
 
@@ -8,8 +14,11 @@ var app = express();
 
 var bodyParser = require('body-parser');
 
+
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
+
+// var httpsServer = https.createServer(credentials, app);
 
 
 // ---------------------------------------
