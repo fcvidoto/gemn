@@ -24,7 +24,7 @@ $(".botao-confirmar").on("click", (e) => {
 function verificauser(email, password) {
 
 	$.post('/consulta', {sender: email,
-											 password: password}, function(data, textStatus, xhr) {
+											 senha: password}, function(data, textStatus, xhr) {
 		// enviar msg ao servidor e ao site avisando do envio
 		// $('.sucesso').text('Comentario enviado com sucesso!');
 		// $('.sucesso').slideDown();
