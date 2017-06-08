@@ -41,12 +41,20 @@ app.get('/', function(req, res) {
 // verifica se o user possui acesso
 app.post('/consulta', function(req, res) {
 
-	connection.query('select * from usuarios where Email="' + req.email + '"', function(error, results, fields) {
-		if (error) throw error;
- 		console.log('resultado:', results);
-		res.send('Sucesso').status(200);
-		// res.send(results);
+	console.log(req.body.email);
+	connection.query('select * from usuarios where Email="' + req.body.email + '"', function(error, results, fields) {
+	  if (error) throw error;
+	  // console.log(typeof results[0] !== "undefined");
+	  // verifica se achar o user
+	  if (typeof results[0] === "undefined") {
+	          res.send('Nao Cadastrado!').status(404);
+	          console.log('nao cadastrado', results);
+	  } else {
+	          res.send('Cadastrado!').status(200);
+	  }
+		// console.log('resultado:', results);
 	});
+
 });
 
 

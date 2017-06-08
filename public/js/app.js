@@ -12,6 +12,8 @@ $(".botao-confirmar").on("click", (e) => {
 	// verifica se o user esta cadastrado na base de dados
 	if (email !== '' && password !== '') {
 		verificauser(email, password); 
+	} else {
+		alert("Preencha todos os campos");
 	}
 });
 
@@ -21,13 +23,13 @@ $(".botao-confirmar").on("click", (e) => {
 // verifica se o user esta cadastrado na base de dados
 function verificauser(email, password) {
 
-	$.post('/consulta', {sender: email,
+	$.post('/consulta', {email: email,
 											 password: password}, function(data, textStatus, xhr) {
 		// enviar msg ao servidor e ao site avisando do envio
 		// $('.sucesso').text('Comentario enviado com sucesso!');
 		// $('.sucesso').slideDown();
 		// $('#email').val('');
 		// $('.comentario-campo').val('');
-    alert(textStatus);
+    alert(data);
 	});
 };
