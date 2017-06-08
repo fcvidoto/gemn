@@ -11,7 +11,7 @@ $(".botao-confirmar").on("click", (e) => {
 	
 	// verifica se o user esta cadastrado na base de dados
 	if (email !== '' && password !== '') {
-		verificauser(); 
+		verificauser(email, password); 
 	}
 });
 
