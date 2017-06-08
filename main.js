@@ -39,7 +39,7 @@ app.get('/', function(req, res) {
 // ---------------------------------------
 // CONSULTA PAGE
 // verifica se o user possui acesso
-app.get('/consulta', function(req, res) {
+app.post('/consulta', function(req, res) {
 
 	connection.query('select * from usuarios where Email="' + req.email + '"', function(error, results, fields) {
 		if (error) throw error;
