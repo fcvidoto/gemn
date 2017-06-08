@@ -29,8 +29,8 @@ app.get('*', function(req, res, next) {
 
 // ***********************************
 //LISTENING
-app.listen(3000, function() {
-	console.log("Ouvindo na porta: " + ( 3000));
+app.listen(3443, function() {
+	console.log("Ouvindo na porta: " + (3443));
 });
 
 
