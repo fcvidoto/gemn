@@ -34,11 +34,4 @@ app.listen(3000, function() {
 });
 
 
-http.createServer(function (req, res) {
-	// res.writeHead(192, {'Content-Type': 'text/plain'});
-	// res.end('Hello World\n');
-	res.sendFile(__dirname + '/public/login.html');
-}).listen(3000, "127.0.0.1");
-console.log('Server running at http://127.0.0.1:3000/');
-
 
