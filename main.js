@@ -20,6 +20,14 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
 // var httpsServer = https.createServer(credentials, app);
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'fatr102030',
+  database : 'acesso'
+});
+connection.connect();
+	
 
 // ---------------------------------------
 // ROOT PAGE
@@ -33,13 +41,6 @@ app.get('/', function(req, res) {
 // verifica se o user possui acesso
 app.post('/consulta', function(req, res) {
 
-	var connection = mysql.createConnection({
-	  host     : 'localhost',
-	  user     : 'root',
-	  password : 'fatr102030',
-	  database : 'acesso'
-	});
-	connection.connect();
 	connection.query('select * from usuarios where Email="' + req.email + '"', function(error, results, fields) {
 		if (error) throw error;
  		console.log('resultado:', results);
