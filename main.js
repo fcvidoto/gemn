@@ -45,6 +45,7 @@ app.post('/consulta', function(req, res) {
 		if (error) throw error;
  		console.log('resultado:', results);
 		res.send(results);
+		// res.send('Sucesso').status(200);
 	});
 	connection.end();
 });

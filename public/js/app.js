@@ -19,11 +19,11 @@ function verificauser() {
 	
 	$.post('/consulta', {sender: email,
 											 password: password}, function(data, textStatus, xhr) {
-    alert("ae");
 		// enviar msg ao servidor e ao site avisando do envio
 		// $('.sucesso').text('Comentario enviado com sucesso!');
 		// $('.sucesso').slideDown();
 		// $('#email').val('');
 		// $('.comentario-campo').val('');
+    alert(textStatus);
 	});
 };
