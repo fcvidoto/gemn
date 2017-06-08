@@ -12,19 +12,40 @@ var https = require('https');
 var express = require('express');
 var app = express();
 
-var bodyParser = require('body-parser');
+var mysql = require('mysql');
 
+var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
 // var httpsServer = https.createServer(credentials, app);
 
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'fatr102030',
+  database : 'acesso'
+});
+
 
 // ---------------------------------------
-//ROOT PAGE
+// ROOT PAGE
 app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/public/login.html');
+});
+
+
+// ---------------------------------------
+// Consulta
+app.get('/consulta', function(req, res) {
+	connection.connect();
+	connection.query('select * from usuarios', function(error, results, fields) {
+		if (error) throw error;
+ 		console.log('resultado:', results);
+		res.send(results);
+	});
+	connection.end();
 });
 
 
