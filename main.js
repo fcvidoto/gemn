@@ -12,6 +12,9 @@ var https = require('https');
 var express = require('express');
 var app = express();
 
+var cookieSession = require('cookie-session');
+var cookieParser = require('cookie-parser');
+
 var mysql = require('mysql');
 
 var bodyParser = require('body-parser');
@@ -21,6 +24,15 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
+app.use(cookieSession({
+	name: 'session',
+	secret: 'topsecret',
+	maxAge: 0.2 * 60 * 60 * 1000, // 0.2 horas (12min)
+	cookie: {
+		secure: true,
+		path: '/login'
+	}
+}));
 
 // var httpsServer = https.createServer(credentials, app);
 var connection = mysql.createConnection({
@@ -44,8 +56,8 @@ app.get('/', function(req, res) {
 // verifica se o user possui acesso
 app.post('/consulta', function(req, res) {
 
-	console.log(req.body.email);
-	connection.query('select * from usuarios where Email="' + req.body.email + '"', function(error, results, fields) {
+	connection.query('select SenhaLogin from usuarios where Email="' + req.body.email + '"', function(error, results, fields) {
+	  console.log(JSON.stringify(results[0].SenhaLogin));
 	  if (error) throw error;
 	  // console.log(typeof results[0] !== "undefined");
 	  // verifica se achar o user
