@@ -4,9 +4,19 @@
 /*
 Login Page =========================== */
 .jumbotron {
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 }
 
 .botao-confirmar {
-	margin-top: 15px;
+	margin-top: 10px;
 } 
+
+.alerta {
+	display: none;
+	background-color: red;
+	padding: 2px;
+}
+
+#formulario {
+	margin-top: 10px;
+}

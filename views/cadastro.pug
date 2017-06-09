@@ -1,0 +1,17 @@
+extends layout.pug
+
+block content
+	.content
+		.container
+			h1 Cadastro
+		.container
+			span.alerta Erro!!
+			form
+				#formulario.form-group
+					label(for='email') Endereço de email:
+					input#email.form-control(type='email', placeholder='Email')
+					span.form-control-feedback
+				.form-group
+					label(for='password') Senha:
+					input#password.form-control(type='password', placeholder='Senha')
+				button.btn.btn-default.botao-confirmar(type='submit') Confirmar

@@ -13,7 +13,7 @@ $(".botao-confirmar").on("click", (e) => {
 	if (email !== '' && password !== '') {
 		verificauser(email, password); 
 	} else {
-		alert("Preencha todos os campos");
+		formErro('Preencha todos os campos');
 	}
 });
 
@@ -30,6 +30,24 @@ function verificauser(email, password) {
 		// $('.sucesso').slideDown();
 		// $('#email').val('');
 		// $('.comentario-campo').val('');
-    alert(data);
+		formErro(data);
 	});
 };
+
+
+// --------------------------------------------------------
+// muda status dos text para erro
+function formErro(msgErro) {
+	// let $formulario =	$(".formulario");
+	// $(".glyphicon")
+	$(".alerta").text(msgErro);
+	$(".alerta").slideDown(600).delay(2000).fadeOut(1000)
+
+}
+
+
+
+
+
+
+
