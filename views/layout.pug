@@ -20,21 +20,33 @@ html
 					a.navbar-brand(href='#') GEMN
 				#bs-example-navbar-collapse-1.collapse.navbar-collapse
 					ul.nav.navbar-nav.navbar-right
-						if (cookie.cliente)			
+						if (cookie.perfil == 'cliente')			
 							li(class=cliente)
 								a(href='/cliente')
-									| cliente
+									| Cliente
 									span.sr-only (current)
-						else if (cookie.usuario)
+							li(class=logout)
+								a(href='/logout')
+									| Logout
+									span.sr-only (logout)
+						else if (cookie.perfil == 'usuario')
 							li(class=usuario)
-								a(href='/')
-									| usuario
+								a(href='/usuario')
+									| Usuário
 									span.sr-only (current)
-						else if (cookie.empresa)
+							li(class=logout)
+								a(href='/logout')
+									| Logout
+									span.sr-only (logout)
+						else if (cookie.perfil == 'empresa')
 							li(class=empresa)
-								a(href='/')
+								a(href='/empresa')
 									| empresa
 									span.sr-only (current)
+							li(class=logout)
+								a(href='/logout')
+									| Logout
+									span.sr-only (logout)
 						else
 							li(class=login)
 								a(href='/')

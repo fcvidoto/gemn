@@ -49,27 +49,33 @@ connection.connect();
 // VALIDAÇÕES DE ACESSO
 // ***************************************
 
+// TODAS AS ROTAS, +6 minutos de acesso
+app.all('*', function(req, res, next) {
+	if (req.session.email !== undefined) {
+		// aumenta a vida do cookie em mais 6 minutos
+		req.session.nowInMinutes = Date.now();
+	}
+	next();
+});
 
 // CLIENTE, USUARIO, EMPRESA PAGE
-app.get(['/'], function(req, res, next) {
+app.get('/', function(req, res, next) {
 	if (req.session.login) {
-		console.log(req.session.perfil);
 		res.redirect('/' + req.session.perfil);
 		return;
 	}
-	console.log(req.session.perfil);
 	next();
 }); 
 
 // USER PAGE
 // valida se o user estiver logado pode acessar a pagina
-app.get(['/usuario'], function(req, res, next) {
-	if (req.session.username === undefined) {
-		res.redirect('/usuario');
-		return;
-	}
-	next();
-});
+// app.get(['/usuario'], function(req, res, next) {
+// 	if (req.session.username === undefined) {
+// 		res.redirect('/usuario');
+// 		return;
+// 	}
+// 	next();
+// });
 
 
 // ***************************************
@@ -87,6 +93,13 @@ app.get(['/usuario'], function(req, res, next) {
 // app.get('/cadastro', function(req, res, next) {
 // 	res.render('cadastro', { pagina: "cadastro", cadastro: "active" });
 // });
+// ---------------------------------------
+// LOGOUT PAGE
+app.get('/logout', function(req, res, next) {
+	req.session = null; // apaga o cookie
+	res.redirect('/');
+});
+
 
 // ---------------------------------------
 // ACESSO PAGE *TESTE
@@ -101,8 +114,39 @@ app.get('/acesso', function(req, res, next) {
 
 // ---------------------------------------
 // CLIENTE PAGE
+// so entra na rota se o user estiver como perfil de cliente
 app.get('/cliente', function(req, res, next) {
-	res.render('cliente', {cookie: req.session} );
+	if (req.session.perfil === 'cliente') {
+		res.render('cliente', { cookie: req.session, cliente: 'active' } );
+	} else {
+		res.redirect('/');
+	}
+});
+
+
+// ---------------------------------------
+// USUARIO PAGE
+// so entra na rota se o user estiver como perfil de usuario
+app.get('/usuario', function(req, res, next) {
+	console.log(req.session.perfil);
+	if (req.session.perfil === 'usuario') {
+		res.render('usuario', { cookie: req.session, usuario: 'active' } );
+	} else {
+		res.redirect('/');
+	}
+});
+
+
+// ---------------------------------------
+// EMPRESA PAGE
+// so entra na rota se o user estiver como perfil de empresa
+app.get('/empresa', function(req, res, next) {
+	console.log(req.session.perfil);
+	if (req.session.perfil === 'empresa') {
+		res.render('empresa', { cookie: req.session, empresa: 'active' } );
+	} else {
+		res.redirect('/');
+	}
 });
 
 // ---------------------------------------
@@ -153,7 +197,7 @@ app.listen(3443, function() {
 function criarUser(req, email, perfil, callback) {
 	req.session.login = 'true'; 
 	req.session.email = email;
-	req.session.perfil = perfil;
+	req.session.perfil = perfil.toLowerCase();
 	return callback();
 }
 

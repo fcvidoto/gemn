@@ -45,7 +45,6 @@ function verificauser(email, password) {
 	    success: function(XMLHttpRequest, textStatus){
 	    	// valida se a senha do usuario e valida
 	    	if (textStatus === 'success') {
-					formMsg(XMLHttpRequest);
 	    		window.location = XMLHttpRequest.url.toLowerCase();
 	    	}
 	    }
