@@ -36,11 +36,12 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
 
 // var httpsServer = https.createServer(credentials, app);
+var bdName = 'acesso';
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
 	password : 'fatr102030',
-	database : 'acesso'
+	database : bdName || 'acesso'
 });
 connection.connect();
 	
@@ -84,10 +85,9 @@ app.get('/', function(req, res, next) {
 
 // ---------------------------------------
 // ROOT PAGE
-// app.get('/', function(req, res) {
-// 	res.render('index', { });
-// 	console.log(req.session.perfil);
-// });
+app.get('/', function(req, res) {
+	res.render('login', {cookie: req.session, login: 'active' } );
+});
 // ---------------------------------------
 // CADASTRO PAGE
 // app.get('/cadastro', function(req, res, next) {
@@ -128,7 +128,6 @@ app.get('/cliente', function(req, res, next) {
 // USUARIO PAGE
 // so entra na rota se o user estiver como perfil de usuario
 app.get('/usuario', function(req, res, next) {
-	console.log(req.session.perfil);
 	if (req.session.perfil === 'usuario') {
 		res.render('usuario', { cookie: req.session, usuario: 'active' } );
 	} else {
@@ -141,22 +140,30 @@ app.get('/usuario', function(req, res, next) {
 // EMPRESA PAGE
 // so entra na rota se o user estiver como perfil de empresa
 app.get('/empresa', function(req, res, next) {
-	console.log(req.session.perfil);
+
 	if (req.session.perfil === 'empresa') {
-		res.render('empresa', { cookie: req.session, empresa: 'active' } );
+		
+		bdName = 'nautica2';
+		connection.connect();
+		connection.query('select * from ', function(error, results, fields) {
+			res.render('empresa', { cookie: req.session, empresa: 'active' } );
+		});
+
 	} else {
 		res.redirect('/');
 	}
+
 });
 
 // ---------------------------------------
 // verifica se o user possui acesso
 app.post('/consulta', function(req, res) {
+
 	connection.query('select SenhaLogin, Perfil, BD from usuarios where Email="' + req.body.email + '"', function(error, results, fields) {
 		if (error) throw error;
 		// se não houver user
 		if (typeof results[0] === "undefined") {
-			res.send('Nao Cadastrado!').status(404);
+			res.status(404).send('Senha incorreta');
 		
 		// se o user estiver cadastrado
 		} else {
@@ -168,7 +175,7 @@ app.post('/consulta', function(req, res) {
 						res.json({url: results[0].Perfil}).status(200);
 					});
 				} else {
-					res.send('Senha incorreta').status(401);
+					res.status(401).send('Senha incorreta');
 				}
 			});
 		} 
@@ -198,6 +205,7 @@ function criarUser(req, email, perfil, callback) {
 	req.session.login = 'true'; 
 	req.session.email = email;
 	req.session.perfil = perfil.toLowerCase();
+	// req.session.perfil = ;
 	return callback();
 }
 

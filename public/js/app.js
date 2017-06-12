@@ -38,8 +38,12 @@ function verificauser(email, password) {
 	    data: {email: email, password: password},
 	    type: 'post',
 	    error: function(XMLHttpRequest, textStatus, errorThrown){
-				if (XMLHttpRequest.status === 401 || XMLHttpRequest.status === 404) {
-					formMsg(XMLHttpRequest);
+				if (XMLHttpRequest.status === 401) {
+					formMsg("Senha invalida!");
+				} else if (XMLHttpRequest.status === 404) {
+					formMsg("Usuario nao cadastrado");
+				}  else if (XMLHttpRequest.status === 502) {
+					formMsg("Banco de dados nao configurado!");
 				}
 	    },
 	    success: function(XMLHttpRequest, textStatus){
