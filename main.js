@@ -17,7 +17,6 @@ var bcrypt = require('bcryptjs');
 
 // var validacaoEmail = require('./config/validacaoEmail')(User, app, bcrypt); // LOGIN 
 
-
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
@@ -26,7 +25,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(cookieSession({
 	name: 'session',
 	secret: 'topsecret',
-	maxAge: 0.2 * 60 * 60 * 1000, // 0.2 horas (12min)
+	maxAge: 0.1 * 60 * 60 * 1000, // 0.2 horas (12min)
 	cookie: {
 		secure: true,
 		path: '/login'
@@ -49,11 +48,16 @@ connection.connect();
 // ***************************************
 // VALIDAÇÕES DE ACESSO
 // ***************************************
-app.get(['/acesso', '/cadastro'], function(req, res, next) {
-	if (req.session.username !== undefined) {
-		res.redirect('/');
+
+
+// CLIENTE, USUARIO, EMPRESA PAGE
+app.get(['/'], function(req, res, next) {
+	if (req.session.login) {
+		console.log(req.session.perfil);
+		res.redirect('/' + req.session.perfil);
 		return;
 	}
+	console.log(req.session.perfil);
 	next();
 }); 
 
@@ -74,60 +78,57 @@ app.get(['/usuario'], function(req, res, next) {
 
 // ---------------------------------------
 // ROOT PAGE
-app.get('/', function(req, res) {
-	res.render('login', { pagina: "login", login: "active" });
-});
-
+// app.get('/', function(req, res) {
+// 	res.render('index', { });
+// 	console.log(req.session.perfil);
+// });
+// ---------------------------------------
+// CADASTRO PAGE
+// app.get('/cadastro', function(req, res, next) {
+// 	res.render('cadastro', { pagina: "cadastro", cadastro: "active" });
+// });
 
 // ---------------------------------------
-// ACESSO PAGE
+// ACESSO PAGE *TESTE
 app.get('/acesso', function(req, res, next) {
-
-	
-	
 	bcrypt.genSalt(8, function(err, salt) {
 	  bcrypt.hash("teste", salt, function(err, hash) {
 			res.render('acesso', {cookie: req.session, senha: hash} );
 	  });
 	});
-
-	// o user precisa estar logado	
-	// if (req.session.login) {
-	// 	res.render('acesso', {cookie: req.session});
-	// } else {
-	// 	res.redirect('/');	
-	// }
 });
 
+
 // ---------------------------------------
-// CADASTRO PAGE
-app.get('/cadastro', function(req, res, next) {
-	res.render('cadastro', { pagina: "cadastro", cadastro: "active" });
+// CLIENTE PAGE
+app.get('/cliente', function(req, res, next) {
+	res.render('cliente', {cookie: req.session} );
 });
 
 // ---------------------------------------
 // verifica se o user possui acesso
 app.post('/consulta', function(req, res) {
-
-	// console.log(typeof results[0] !== "undefined");
-	// console.log('resultado:', results);
-	// console.log(JSON.stringify(results[0]));
-	connection.query('select SenhaLogin from usuarios where Email="' + req.body.email + '"', function(error, results, fields) {
+	connection.query('select SenhaLogin, Perfil, BD from usuarios where Email="' + req.body.email + '"', function(error, results, fields) {
 		if (error) throw error;
-
 		// se não houver user
 		if (typeof results[0] === "undefined") {
 			res.send('Nao Cadastrado!').status(404);
-			console.log('nao cadastrado', results);
 		
 		// se o user estiver cadastrado
 		} else {
-			// criarUser(req, req.username, req.email, function() {
-			// 	res.render('acesso', {cookie: req.session});
-			// });
-			// 
-			res.send('Cadastrado!').status(200);
-		}
+			bcrypt.compare(req.body.password, results[0].SenhaLogin, function(err, resposta) {
+				if (error) throw error;
+				if (resposta) {
+					// cria a cookie session e redireciona para a rota correta
+					criarUser(req, req.body.email, results[0].Perfil, function() {
+						res.json({url: results[0].Perfil}).status(200);
+					});
+				} else {
+					res.send('Senha incorreta').status(401);
+				}
+			});
+		} 
+
 	});
 
 });
@@ -143,16 +144,16 @@ app.get('*', function(req, res, next) {
 // ***********************************
 //LISTENING
 app.listen(3443, function() {
-	console.log("Ouvindo na porta: " + (3443));
+	console.log("Ouvindo na porta: " + 3443);
 });
 
 
 // ---------------------------------------
 // cria a session
-function criarUser(req, username, email, callback) {
+function criarUser(req, email, perfil, callback) {
 	req.session.login = 'true'; 
-	req.session.username = username;
 	req.session.email = email;
+	req.session.perfil = perfil;
 	return callback();
 }
 

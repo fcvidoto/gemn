@@ -13,7 +13,7 @@ $(".botao-confirmar").on("click", (e) => {
 	if (email !== '' && password !== '') {
 		verificauser(email, password); 
 	} else {
-		formErro('Preencha todos os campos');
+		formMsg('Preencha todos os campos');
 	}
 });
 
@@ -23,21 +23,40 @@ $(".botao-confirmar").on("click", (e) => {
 // verifica se o user esta cadastrado na base de dados
 function verificauser(email, password) {
 
-	$.post('/consulta', {email: email,
-											 password: password}, function(data, textStatus, xhr) {
-		// enviar msg ao servidor e ao site avisando do envio
-		// $('.sucesso').text('Comentario enviado com sucesso!');
-		// $('.sucesso').slideDown();
-		// $('#email').val('');
-		// $('.comentario-campo').val('');
-		formErro(data);
+	// $.post('/consulta', {email: email,
+	// 					password: password}, function(data, textStatus, xhr) {
+	// 	// enviar msg ao servidor e ao site avisando do envio
+	// 	// $('.sucesso').text('Comentario enviado com sucesso!');
+	// 	// $('.sucesso').slideDown();
+	// 	// $('#email').val('');
+	// 	// $('.comentario-campo').val('');
+	// 	formMsg(data);
+	// });
+
+	$.ajax({
+	    url: "/consulta", 
+	    data: {email: email, password: password},
+	    type: 'post',
+	    error: function(XMLHttpRequest, textStatus, errorThrown){
+				if (XMLHttpRequest.status === 401 || XMLHttpRequest.status === 404) {
+					formMsg(XMLHttpRequest);
+				}
+	    },
+	    success: function(XMLHttpRequest, textStatus){
+	    	// valida se a senha do usuario e valida
+	    	if (textStatus === 'success') {
+					formMsg(XMLHttpRequest);
+	    		window.location = XMLHttpRequest.url.toLowerCase();
+	    	}
+	    }
 	});
+
 };
 
 
 // --------------------------------------------------------
 // muda status dos text para erro
-function formErro(msgErro) {
+function formMsg(msgErro) {
 	// let $formulario =	$(".formulario");
 	// $(".glyphicon")
 	$(".alerta").text(msgErro);

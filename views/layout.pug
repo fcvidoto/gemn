@@ -20,10 +20,26 @@ html
 					a.navbar-brand(href='#') GEMN
 				#bs-example-navbar-collapse-1.collapse.navbar-collapse
 					ul.nav.navbar-nav.navbar-right
-						li(class=login)
-							a(href='/')
-								| Login
-								span.sr-only (current)
+						if (cookie.cliente)			
+							li(class=cliente)
+								a(href='/cliente')
+									| cliente
+									span.sr-only (current)
+						else if (cookie.usuario)
+							li(class=usuario)
+								a(href='/')
+									| usuario
+									span.sr-only (current)
+						else if (cookie.empresa)
+							li(class=empresa)
+								a(href='/')
+									| empresa
+									span.sr-only (current)
+						else
+							li(class=login)
+								a(href='/')
+									| Login
+									span.sr-only (current)	
 
 		block content
 
