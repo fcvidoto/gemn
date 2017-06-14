@@ -41,7 +41,7 @@ function verificauser(email, password) {
 				} else if (XMLHttpRequest.status === 404) {
 					formMsg("Usuário não cadastrado");
 				}  else if (XMLHttpRequest.status === 502) {
-					formMsg("Banco de dados não configurado!");
+					formMsg("Usuário não cadastrado!");
 				}
 	    },
 	    success: function(XMLHttpRequest, textStatus){

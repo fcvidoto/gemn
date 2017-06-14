@@ -4,17 +4,29 @@
 /*
 Estilos Gerais =========================== */
 body {
-	letter-spacing: 1.3px;
+	letter-spacing: 1.3333px;
 	font-size: 1.6em;
-	text-shadow: 1px 0px #cecece;
 }
 
 
-input {
+input,
+.botao-confirmar {
 	font-family: 'Open Sans', sans-serif;
 }
 
+.mini-ancora {
+	margin: 5px auto;
+	display: block;
+}
 
+.menua {
+	font-family: 'Roboto Condensed', sans-serif;
+	font-size: 1.2em;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+	color: white;
+}
 
 /*
 Navbar =========================== */

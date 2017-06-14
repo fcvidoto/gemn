@@ -16,7 +16,6 @@ var path = require('path');
 var bcrypt = require('bcryptjs');
 var favicon = require('serve-favicon');
 
-
 // variaveis globais do user
 var userPerfil;
 var userEmail;
