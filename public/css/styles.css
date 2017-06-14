@@ -2,11 +2,42 @@
 
 
 /*
-Login Page =========================== */
-.jumbotron {
-	margin-bottom: 20px;
+Estilos Gerais =========================== */
+body {
+	letter-spacing: 1.3px;
+	font-size: 1.6em;
+	text-shadow: 1px 0px #cecece;
 }
 
+
+
+/*
+Navbar =========================== */
+.navbar-header,
+.navbar-inverse {
+	background-color: #5c638c;
+}
+
+.navbar-inverse {
+	border-color: #5c638c;
+	border-radius: initial;
+}
+
+.navbar-inverse .navbar-nav > .active > a {
+	background-color: rgb(146, 149, 166);
+}
+.navbar-inverse .navbar-nav > .active > a:hover {
+	background-color: rgb(146, 149, 166);
+}
+
+.navbar-inverse .navbar-brand {
+	color: white;
+}
+
+
+
+/*
+Login Page =========================== */
 .botao-confirmar {
 	margin-top: 10px;
 } 
@@ -20,8 +51,20 @@ Login Page =========================== */
 #formulario {
 	margin-top: 10px;
 }
+.jumbotron {
+	background-image: url('../images/logo.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-top: 1px solid #b6b6c5;
+	border-bottom: 1px solid #2f2fc5;
+	min-height: 400px; 
+}
 
 
+.form-group {
+	margin-top: 25px;
+}
 
 
 /*
@@ -29,3 +72,22 @@ Cliente Page =========================== */
 .table {
 	margin-bottom: 50px;
 }
+
+
+
+
+
+/*
+MOBILE =========================== */
+@media (max-width: 767px) {
+
+	/*
+	Login Page =========================== */
+	.jumbotron {
+		min-height: 100px; 
+	}	
+
+
+}
+
+

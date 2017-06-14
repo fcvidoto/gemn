@@ -15,6 +15,12 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var bcrypt = require('bcryptjs');
 
+
+// variaveis globais do user
+var userPerfil;
+var userEmail;
+var userBD;
+
 // var validacaoEmail = require('./config/validacaoEmail')(User, app, bcrypt); // LOGIN 
 
 app.use(bodyParser.urlencoded({
@@ -183,7 +189,7 @@ app.get('/empresa', function(req, res, next) {
 // verifica se o user possui acesso
 app.post('/consulta', function(req, res) {
 
-	connection.query('select SenhaLogin, Perfil, BD from usuarios where Email="' + req.body.email + '"', function(error, results, fields) {
+	connection.query('select SenhaLogin, Email, Perfil, BD from usuarios where Email="' + req.body.email + '"', function(error, results, fields) {
 		if (error) throw error;
 		// se não houver user
 		if (typeof results[0] === "undefined") {
@@ -193,9 +199,12 @@ app.post('/consulta', function(req, res) {
 		} else {
 			bcrypt.compare(req.body.password, results[0].SenhaLogin, function(err, resposta) {
 				if (error) throw error;
+				// cria a cookie session e redireciona para a rota correta
 				if (resposta) {
-					// cria a cookie session e redireciona para a rota correta
 					criarUser(req, req.body.email, results[0].Perfil, function() {
+						userPerfil = results[0].Perfil;
+						userEmail = results[0].Email;
+						userBD = results[0].BD;
 						res.json({url: results[0].Perfil}).status(200);
 					});
 				} else {
