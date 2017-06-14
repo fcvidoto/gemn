@@ -11,7 +11,8 @@
     "express": "^4.15.3",
     "helmet": "^3.6.1",
     "mysql": "^2.13.0",
-    "pug": "^2.0.0-rc.2"
+    "pug": "^2.0.0-rc.2",
+    "serve-favicon": "^2.4.3"
   },
   "devDependencies": {},
   "scripts": {

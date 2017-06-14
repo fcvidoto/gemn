@@ -14,6 +14,7 @@ var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var path = require('path');
 var bcrypt = require('bcryptjs');
+var favicon = require('serve-favicon');
 
 
 // variaveis globais do user
@@ -22,7 +23,7 @@ var userEmail;
 var userBD;
 
 // var validacaoEmail = require('./config/validacaoEmail')(User, app, bcrypt); // LOGIN 
-
+app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
@@ -40,7 +41,6 @@ app.use(cookieSession({
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
-
 // var httpsServer = https.createServer(credentials, app);
 var connection = mysql.createConnection({
 	host     : 'localhost',

@@ -1,7 +1,5 @@
 
 
-
-
 // valida o acesso do user
 $(".botao-confirmar").on("click", (e) => {
 	e.preventDefault();
@@ -39,11 +37,11 @@ function verificauser(email, password) {
 	    type: 'post',
 	    error: function(XMLHttpRequest, textStatus, errorThrown){
 				if (XMLHttpRequest.status === 401) {
-					formMsg("Senha invalida!");
+					formMsg("Senha inválida!");
 				} else if (XMLHttpRequest.status === 404) {
-					formMsg("Usuario nao cadastrado");
+					formMsg("Usuário não cadastrado");
 				}  else if (XMLHttpRequest.status === 502) {
-					formMsg("Banco de dados nao configurado!");
+					formMsg("Banco de dados não configurado!");
 				}
 	    },
 	    success: function(XMLHttpRequest, textStatus){
