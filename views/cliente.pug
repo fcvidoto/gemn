@@ -7,4 +7,53 @@ block title
 block content
 	.content
 		.container
-			h3 Cliente
+			each val in {dadosCliente}
+				each valor in val
+					table.table
+						h3 #{valor.Nome}
+						br
+						tr
+							td Email:
+							td #{valor.Email}
+						tr
+							td Tipo de Pessoa:
+							td #{valor.TipoPessoa}
+						tr
+							td CPF/CNPJ:
+							td #{valor.CPFCNPJ}
+						tr
+							td Estado:
+							td #{valor.UF}
+						tr
+							td Cidade:
+							td #{valor.Cidade}
+						tr
+							td Endereço:
+							td #{valor.Endereco}, #{valor.Num}, #{valor.Complemento}
+						tr
+							td Bairro:
+							td #{valor.Bairro}
+						tr
+							td Tel. Residencial:
+							td #{valor.TelResid}
+						tr
+							td Tel. Comercial:
+							td #{valor.TelComerc}
+						tr
+							td Cel 1:
+							td #{valor.Cel1}
+						tr
+							td Cel 2:
+							td #{valor.Cel2}
+						tr
+							td Secretaria:
+							td #{valor.Secretaria}
+						tr
+							td Cobranca:
+							td #{valor.Cobranca}
+
+
+
+
+
+

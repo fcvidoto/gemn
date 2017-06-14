@@ -8,4 +8,35 @@ block title
 block content
 	.content
 		.container
-			h3 Usuário
+			each val in {dadosUsuario}
+				h3 Informações de #{dadosUsuario.NomeUsuario}
+				br
+				br
+				table.table
+					tr
+						td CPF:
+						td #{dadosUsuario.Cpf}
+					tr
+						td Rg:
+						td #{dadosUsuario.Rg}
+					tr
+						td Email:
+						td #{dadosUsuario.Email}
+					tr
+						td Estado:
+						td #{dadosUsuario.UF}
+					tr
+						td Cidade:
+						td #{dadosUsuario.Cidade}
+					tr
+						td Endereço:
+						td #{dadosUsuario.Endereco}, #{dadosUsuario.Numero}, #{dadosUsuario.Bairro}
+					tr
+						td Cep:
+						td #{dadosUsuario.Cep}
+					tr
+						td Telefone:
+						td #{dadosUsuario.Telefone}
+					tr
+						td Função:
+						td #{dadosUsuario.Funcao}

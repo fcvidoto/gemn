@@ -8,20 +8,49 @@ block title
 block content
 	.content
 		.container
-			h3 Empresa
-				br
+			each val in {dadosEmpresa}
+				h3 Informações de #{dadosEmpresa.EMPRESA}
 				br
 				br
 				table.table
 					tr
-						th Firstname
-						th Lastname
+						td Nome Fantasia:
+						td #{dadosEmpresa.NOMEFANTASIA}
 					tr
-						td Jill
-						td Smith
+						td Email:
+						td #{dadosEmpresa.EMAIL}
 					tr
-						td Jill
-						td Smith
+						td Site:
+						td #{dadosEmpresa.SITE}
 					tr
-						td Jill
-						td Smith
+						td CNPJ:
+						td #{dadosEmpresa.CNPJ}
+					tr
+						td Estado:
+						td #{dadosEmpresa.UF}
+					tr
+						td Cidade:
+						td #{dadosEmpresa.CIDADE}
+					tr
+						td Endereço:
+						td #{dadosEmpresa.ENDERECO}, #{dadosEmpresa.NUMERO}, #{dadosEmpresa.BAIRRO}
+					tr
+						td Cep:
+						td #{dadosEmpresa.CEP}
+					tr
+						td Telefone:
+						td #{dadosEmpresa.TELEFONE}
+					tr
+						td Quartos:
+						td #{dadosEmpresa.QtdQuartos}
+					tr
+						td Embarcações:
+						td #{dadosEmpresa.QtdEmbarcacoes}
+					tr
+						td Embarcações Molhada:
+						td #{dadosEmpresa.QtdEmbacacoesMolhada}
+					tr
+						td Embarcações Suspensa:
+						td #{dadosEmpresa.QtdEmbarcacoesSuspensa}
+
+

@@ -36,12 +36,11 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
 
 // var httpsServer = https.createServer(credentials, app);
-var bdName = 'acesso';
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
 	password : 'fatr102030',
-	database : bdName || 'acesso'
+	database : 'acesso'
 });
 connection.connect();
 	
@@ -97,7 +96,7 @@ app.get('/', function(req, res) {
 // LOGOUT PAGE
 app.get('/logout', function(req, res, next) {
 	req.session = null; // apaga o cookie
-	res.redirect('/');
+	res.redirect('http://gemn.com.br');
 });
 
 
@@ -117,7 +116,18 @@ app.get('/acesso', function(req, res, next) {
 // so entra na rota se o user estiver como perfil de cliente
 app.get('/cliente', function(req, res, next) {
 	if (req.session.perfil === 'cliente') {
-		res.render('cliente', { cookie: req.session, cliente: 'active' } );
+		let cnCliente = mysql.createConnection({
+			host     : 'localhost',
+			user     : 'root',
+			password : 'fatr102030',
+			database : 'nautica3'
+		});
+		cnCliente.connect();
+		cnCliente.query('select * from clientefornecedor where Email="ronaldo.ramires@gmail.com"', function(error, results, fields) {
+			console.log(results);
+			res.render('cliente', { cookie: req.session, cliente: 'active', dadosCliente: results } );
+		});
+		cnCliente.end(); // fecha a conn
 	} else {
 		res.redirect('/');
 	}
@@ -129,7 +139,18 @@ app.get('/cliente', function(req, res, next) {
 // so entra na rota se o user estiver como perfil de usuario
 app.get('/usuario', function(req, res, next) {
 	if (req.session.perfil === 'usuario') {
-		res.render('usuario', { cookie: req.session, usuario: 'active' } );
+		let cnUsuario = mysql.createConnection({
+			host     : 'localhost',
+			user     : 'root',
+			password : 'fatr102030',
+			database : 'nautica3'
+		});
+		cnUsuario.connect();
+		cnUsuario.query('select * from usuarios', function(error, results, fields) {
+			console.log(results[0]);
+			res.render('usuario', { cookie: req.session, usuario: 'active', dadosUsuario: results[0] } );
+		});
+		cnUsuario.end(); // fecha a conn
 	} else {
 		res.redirect('/');
 	}
@@ -140,19 +161,22 @@ app.get('/usuario', function(req, res, next) {
 // EMPRESA PAGE
 // so entra na rota se o user estiver como perfil de empresa
 app.get('/empresa', function(req, res, next) {
-
 	if (req.session.perfil === 'empresa') {
-		
-		bdName = 'nautica2';
-		connection.connect();
-		connection.query('select * from ', function(error, results, fields) {
-			res.render('empresa', { cookie: req.session, empresa: 'active' } );
+		let cnEmpresa = mysql.createConnection({
+			host     : 'localhost',
+			user     : 'root',
+			password : 'fatr102030',
+			database : 'nautica2'
 		});
-
+		cnEmpresa.connect();
+		cnEmpresa.query('select * from empresa', function(error, results, fields) {
+			res.render('empresa', { cookie: req.session, empresa: 'active', dadosEmpresa: results[0] } );
+			console.log(results);
+		});
+		cnEmpresa.end(); // fecha a conn
 	} else {
 		res.redirect('/');
 	}
-
 });
 
 // ---------------------------------------
