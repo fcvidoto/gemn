@@ -2,16 +2,14 @@ extends layout.pug
 
 
 block title
-	title GEMN - Empresa
+	title GeMN - Empresa
 
 
 block content
 	.content
 		.container
 			each val in {dadosEmpresa}
-				h3 Informações de #{dadosEmpresa.EMPRESA}
-				br
-				br
+				h1.titulo-pag • #{dadosEmpresa.EMPRESA}
 				table.table
 					tr
 						td Nome Fantasia:

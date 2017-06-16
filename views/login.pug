@@ -1,7 +1,7 @@
 extends layout.pug
 
 block title
-	title GEMN - Login
+	title GeMN - Login
 
 block content
 	.content
@@ -10,12 +10,11 @@ block content
 				h1 .
 		.container
 			span.alerta Erro!!
-			form
+			form.form-login
+				h1.titulo-pag • Login
 				#formulario.form-group
-					label(for='email') Endereço de email:
 					input#email.form-control(type='email', placeholder='Email')
 					span.form-control-feedback
 				.form-group
-					label(for='password') Senha:
 					input#password.form-control(type='password', placeholder='Senha')
 				button.btn.btn-primary.botao-confirmar(type='submit') Confirmar

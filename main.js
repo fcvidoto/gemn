@@ -128,7 +128,7 @@ app.get('/cliente', function(req, res, next) {
 			database : 'nautica3'
 		});
 		cnCliente.connect();
-		cnCliente.query('select * from clientefornecedor where Email="ronaldo.ramires@gmail.com"', function(error, results, fields) {
+		cnCliente.query('select * from clientefornecedor where Email="' + userEmail + '"', function(error, results, fields) {
 			console.log(results);
 			res.render('cliente', { cookie: req.session, cliente: 'active', dadosCliente: results } );
 		});
@@ -148,7 +148,7 @@ app.get('/usuario', function(req, res, next) {
 			host     : 'localhost',
 			user     : 'root',
 			password : 'fatr102030',
-			database : 'nautica3'
+			database : userBD
 		});
 		cnUsuario.connect();
 		cnUsuario.query('select * from usuarios', function(error, results, fields) {
@@ -171,7 +171,7 @@ app.get('/empresa', function(req, res, next) {
 			host     : 'localhost',
 			user     : 'root',
 			password : 'fatr102030',
-			database : 'nautica2'
+			database : userBD
 		});
 		cnEmpresa.connect();
 		cnEmpresa.query('select * from empresa', function(error, results, fields) {
@@ -187,13 +187,11 @@ app.get('/empresa', function(req, res, next) {
 // ---------------------------------------
 // verifica se o user possui acesso
 app.post('/consulta', function(req, res) {
-
 	connection.query('select SenhaLogin, Email, Perfil, BD from usuarios where Email="' + req.body.email + '"', function(error, results, fields) {
 		if (error) throw error;
 		// se não houver user
 		if (typeof results[0] === "undefined") {
 			res.status(404).send('Senha incorreta');
-		
 		// se o user estiver cadastrado
 		} else {
 			bcrypt.compare(req.body.password, results[0].SenhaLogin, function(err, resposta) {
@@ -201,6 +199,7 @@ app.post('/consulta', function(req, res) {
 				// cria a cookie session e redireciona para a rota correta
 				if (resposta) {
 					criarUser(req, req.body.email, results[0].Perfil, function() {
+						// adiciona as variaveis globais os dados do user logado
 						userPerfil = results[0].Perfil;
 						userEmail = results[0].Email;
 						userBD = results[0].BD;
@@ -211,9 +210,7 @@ app.post('/consulta', function(req, res) {
 				}
 			});
 		} 
-
 	});
-
 });
 
 
@@ -237,7 +234,6 @@ function criarUser(req, email, perfil, callback) {
 	req.session.login = 'true'; 
 	req.session.email = email;
 	req.session.perfil = perfil.toLowerCase();
-	// req.session.perfil = ;
 	return callback();
 }
 

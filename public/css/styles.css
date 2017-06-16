@@ -1,6 +1,4 @@
 
-
-
 /*
 Estilos Gerais =========================== */
 body {
@@ -8,15 +6,18 @@ body {
 	font-size: 1.6em;
 }
 
-
 input,
 .botao-confirmar {
-	font-family: 'Open Sans', sans-serif;
+	/*font-family: 'Open Sans', sans-serif;*/
+}
+
+input {
+	color: #050d41;
 }
 
 .mini-ancora {
 	margin: 5px auto;
-	display: block;
+	display: initial;
 }
 
 .menua {
@@ -24,9 +25,25 @@ input,
 	font-size: 1.2em;
 }
 
+/* links gerais */
 .navbar-inverse .navbar-nav>li>a {
 	color: white;
 }
+.navbar-inverse .navbar-nav>li>a:hover {
+	text-decoration: underline;
+}
+
+/* titulo das paginas */
+.titulo-pag {
+    margin-bottom: 15px;
+    color: rgb(33, 37, 64);
+    font-size: 1.59em;
+    margin-top: 5px;
+    /* text-shadow: 2px 2px lightgrey; */
+    text-transform: uppercase;
+    font-family: "Open Sans";
+}
+
 
 /*
 Navbar =========================== */
@@ -53,12 +70,25 @@ Navbar =========================== */
 
 
 
+
+
+
+
 /*
 Login Page =========================== */
 .botao-confirmar {
-	margin-top: 10px;
-	padding: 10px 30px;
-} 
+    margin: 10px auto;
+    display: block;
+    border: 1px solid #494949;
+    padding: 15px 40px;
+    font-size: .85em;
+    letter-spacing: .7px;
+    background-color: #515151;
+    text-shadow: 1px 0px black;
+}
+.botao-confirmar:hover {
+    background-color: #3f3f3f;
+}
 
 .alerta {
 	background-color: red;
@@ -66,7 +96,6 @@ Login Page =========================== */
 	display: none;
 	padding: 5px;
 }
-
 
 #formulario {
 	margin-top: 10px;
@@ -82,7 +111,6 @@ Login Page =========================== */
 	margin-bottom: 15px;
 }
 
-
 .form-group {
 	margin-top: 15px;
 }
@@ -90,6 +118,9 @@ Login Page =========================== */
 label {
 	font-family: 'Open Sans', sans-serif;
 }
+
+
+
 
 
 
@@ -108,11 +139,16 @@ MOBILE =========================== */
 @media (max-width: 767px) {
 
 	/*
+	Estilos Gerais =========================== */
+	.mini-ancora {
+		display: block;
+	}
+
+	/*
 	Login Page =========================== */
 	.jumbotron {
 		min-height: 100px; 
 	}	
-
 
 }
 

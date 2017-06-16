@@ -1,7 +1,7 @@
 extends layout.pug
 
 block title
-	title GEMN - Usuário
+	title GeMN - Usuário
 
 
 block content
@@ -10,8 +10,7 @@ block content
 			each val in {dadosCliente}
 				each valor in val
 					table.table
-						h3 #{valor.Nome}
-						br
+						h1.titulo-pag • #{valor.Nome}
 						tr
 							td Email:
 							td #{valor.Email}
