@@ -1,17 +1,22 @@
 extends layout.pug
 
+block title
+	title GeMN - Cadastro
+
 block content
 	.content
 		.container
-			h1 Cadastro
-		.container
 			span.alerta Erro!!
-			form
+			form.form-login
+				h1.titulo-pag • Cadastro
 				#formulario.form-group
-					label(for='email') Endereço de email:
-					input#email.form-control(type='email', placeholder='Email')
+					label(for='email') Email:
+					input#email-cadastro.form-control(type='email', placeholder='Email')
 					span.form-control-feedback
 				.form-group
 					label(for='password') Senha:
-					input#password.form-control(type='password', placeholder='Senha')
-				button.btn.btn-default.botao-confirmar(type='submit') Confirmar
+					input#senha-cadastro.form-control(type='password', placeholder='Senha')
+				.form-group
+					label(for='password') Senha (re-insira a senha):
+					input#senha-cadastro-confirma.form-control(type='password', placeholder='Senha')
+				button.btn.btn-primary.botao-registrar(type='submit') Registrar

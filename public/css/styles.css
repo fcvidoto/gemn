@@ -76,7 +76,8 @@ Navbar =========================== */
 
 /*
 Login Page =========================== */
-.botao-confirmar {
+.botao-confirmar,
+.botao-registrar {
     margin: 10px auto;
     display: block;
     border: 1px solid #494949;

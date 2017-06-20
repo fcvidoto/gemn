@@ -16,12 +16,19 @@ var path = require('path');
 var bcrypt = require('bcryptjs');
 var favicon = require('serve-favicon');
 
+// email validation
+var User = require('./models/user');
+var mongoose = require('mongoose');
+var nev = require('email-verification')(mongoose);
+
 // variaveis globais do user
 var userPerfil;
 var userEmail;
 var userBD;
 
 // var validacaoEmail = require('./config/validacaoEmail')(User, app, bcrypt); // LOGIN 
+var database = require('./config/database')();
+
 app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -37,6 +44,10 @@ app.use(cookieSession({
 		path: '/login'
 	}
 }));
+
+
+// ENVIA EMAIL DE CADASTRO
+var validacaoEmail = require('./config/validacaoEmail')(bcrypt, app, User);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
@@ -92,11 +103,15 @@ app.get('/', function(req, res, next) {
 app.get('/', function(req, res) {
 	res.render('login', {cookie: req.session, login: 'active' } );
 });
+
+
 // ---------------------------------------
 // CADASTRO PAGE
-// app.get('/cadastro', function(req, res, next) {
-// 	res.render('cadastro', { pagina: "cadastro", cadastro: "active" });
-// });
+app.get('/cadastro', function(req, res, next) {
+	res.render('cadastro', {cookie: req.session, cadastro: "active" });
+});
+
+
 // ---------------------------------------
 // LOGOUT PAGE
 app.get('/logout', function(req, res, next) {
@@ -191,7 +206,7 @@ app.post('/consulta', function(req, res) {
 		if (error) throw error;
 		// se não houver user
 		if (typeof results[0] === "undefined") {
-			res.status(404).send('Senha incorreta');
+			res.status(404).send('Usuário não encontrado');
 		// se o user estiver cadastrado
 		} else {
 			bcrypt.compare(req.body.password, results[0].SenhaLogin, function(err, resposta) {

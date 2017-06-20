@@ -1,5 +1,7 @@
 
 
+// ***************************************************************
+// LOGIN PAGE
 // valida o acesso do user
 $(".botao-confirmar").on("click", (e) => {
 	e.preventDefault();
@@ -15,22 +17,9 @@ $(".botao-confirmar").on("click", (e) => {
 	}
 });
 
-
-
 // --------------------------------------------------------
 // verifica se o user esta cadastrado na base de dados
 function verificauser(email, password) {
-
-	// $.post('/consulta', {email: email,
-	// 					password: password}, function(data, textStatus, xhr) {
-	// 	// enviar msg ao servidor e ao site avisando do envio
-	// 	// $('.sucesso').text('Comentario enviado com sucesso!');
-	// 	// $('.sucesso').slideDown();
-	// 	// $('#email').val('');
-	// 	// $('.comentario-campo').val('');
-	// 	formMsg(data);
-	// });
-
 	$.ajax({
 	    url: "/consulta", 
 	    data: {email: email, password: password},
@@ -51,9 +40,7 @@ function verificauser(email, password) {
 	    	}
 	    }
 	});
-
 };
-
 
 // --------------------------------------------------------
 // muda status dos text para erro
@@ -67,6 +54,50 @@ function formMsg(msgErro) {
 
 
 
+
+
+// ***************************************************************
+// CADASTRO PAGE
+$(".botao-registrar").on('click', (e) => {
+	e.preventDefault();
+	$emailCadastro = $('#email-cadastro').val();
+	$senhaCadastro = $('#senha-cadastro').val();
+	$senhaCadastroConfirma = $('#senha-cadastro-confirma').val();
+	// verifica se os campos de email, senha e confirmar senha estao preenchidos
+	if ($emailCadastro == '' && $senhaCadastro == '' && $senhaCadastroConfirma == '') {
+		$(".alerta").text('Preencha todos os campos');
+		$(".alerta").slideDown(600).delay(2000).fadeOut(1000)
+	}
+	// verifica se a senha bate com a confirmação de senha
+	if ($senhaCadastro !== $senhaCadastroConfirma) {
+		$(".alerta").text('A senha e a confirmação de senha estão diferentes');
+		$(".alerta").slideDown(600).delay(2000).fadeOut(1000)
+	}
+	// verifica se o email do user se encontra na base de dados
+	$.ajax({
+	    url: "/consulta", 
+	    data: {
+		    			email: $emailCadastro, 
+		    			password: $senhaCadastro
+	    			},
+	    type: 'post',
+	    error: function(XMLHttpRequest, textStatus, errorThrown){
+				if (XMLHttpRequest.status === 401) {
+					formMsg("Senha inválida!");
+				} else if (XMLHttpRequest.status === 404) {
+					formMsg("Usuário não cadastrado");
+				}  else if (XMLHttpRequest.status === 502) {
+					formMsg("Usuário não cadastrado!");
+				}
+	    },
+	    success: function(XMLHttpRequest, textStatus){
+	    	// valida se a senha do usuario e valida
+	    	if (textStatus === 'success') {
+	    		window.location = XMLHttpRequest.url.toLowerCase();
+	    	}
+	    }
+	});
+});
 
 
 
