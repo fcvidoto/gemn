@@ -45,13 +45,6 @@ app.use(cookieSession({
 	}
 }));
 
-
-// ENVIA EMAIL DE CADASTRO
-var validacaoEmail = require('./config/validacaoEmail')(bcrypt, app, User);
-
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, '/views'));
-// var httpsServer = https.createServer(credentials, app);
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
@@ -59,12 +52,21 @@ var connection = mysql.createConnection({
 	database : 'acesso'
 });
 connection.connect();
-	
 
+// ENVIA EMAIL DE CADASTRO
+var validacaoEmail = require('./config/validacaoEmail')(bcrypt, app, User, connection, criarUser, userPerfil, userEmail, userBD);
+app.set('view engine', 'pug');
+app.set('views', [
+									__dirname + '/views', 
+									__dirname + '/views/cliente',
+								  __dirname + '/views/empresa', 
+								  __dirname + '/views/marinheiro', 
+								  __dirname + '/views/usuario'
+								  ]);
+	
 // ***************************************
 // VALIDAÇÕES DE ACESSO
 // ***************************************
-
 // TODAS AS ROTAS, +6 minutos de acesso
 app.all('*', function(req, res, next) {
 	if (req.session.email !== undefined) {

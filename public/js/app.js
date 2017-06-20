@@ -5,7 +5,6 @@
 // valida o acesso do user
 $(".botao-confirmar").on("click", (e) => {
 	e.preventDefault();
-
 	var email = $('#email').val();
 	var password = $('#password').val();
 	
@@ -75,7 +74,7 @@ $(".botao-registrar").on('click', (e) => {
 	}
 	// verifica se o email do user se encontra na base de dados
 	$.ajax({
-	    url: "/consulta", 
+	    url: "/cadastro", 
 	    data: {
 		    			email: $emailCadastro, 
 		    			password: $senhaCadastro
@@ -93,7 +92,10 @@ $(".botao-registrar").on('click', (e) => {
 	    success: function(XMLHttpRequest, textStatus){
 	    	// valida se a senha do usuario e valida
 	    	if (textStatus === 'success') {
-	    		window.location = XMLHttpRequest.url.toLowerCase();
+					formMsg(XMLHttpRequest); // msg de envio de email
+					setTimeout(() => {
+		    		window.location = '/'; // vai para a pagina principal apos 3s
+					}, 3000)
 	    	}
 	    }
 	});
